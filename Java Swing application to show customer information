@@ -1,0 +1,102 @@
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class CustomerInfo extends JFrame implements ActionListener {
+
+    private Container container;
+    private JLabel idLabel, lastNameLabel, firstNameLabel, phoneLabel;
+    private JTextField idField, lastNameField, firstNameField, phoneField;
+    private JButton previousButton, nextButton;
+
+
+    private String[][] customers = {
+            {"1", "Chenda", "Sovisal", "092888999"},
+            {"2", "Kom", "Lina", "092080999"},
+            {"3", "Chan", "Seyha", "092777666"}
+    };
+    private int currentIndex = 0;
+
+    public CustomerInfo() {
+        setTitle("Customer");
+        setBounds(300, 90, 400, 300);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
+
+        container = getContentPane();
+        container.setLayout(null);
+
+        idLabel = new JLabel("ID:");
+        idLabel.setBounds(50, 50, 100, 30);
+        container.add(idLabel);
+
+        idField = new JTextField();
+        idField.setBounds(150, 50, 150, 30);
+        idField.setEditable(false);
+        container.add(idField);
+
+        lastNameLabel = new JLabel("Last Name:");
+        lastNameLabel.setBounds(50, 100, 100, 30);
+        container.add(lastNameLabel);
+
+        lastNameField = new JTextField();
+        lastNameField.setBounds(150, 100, 150, 30);
+        lastNameField.setEditable(false);
+        container.add(lastNameField);
+
+        firstNameLabel = new JLabel("First Name:");
+        firstNameLabel.setBounds(50, 150, 100, 30);
+        container.add(firstNameLabel);
+
+        firstNameField = new JTextField();
+        firstNameField.setBounds(150, 150, 150, 30);
+        firstNameField.setEditable(false);
+        container.add(firstNameField);
+
+        phoneLabel = new JLabel("Phone:");
+        phoneLabel.setBounds(50, 200, 100, 30);
+        container.add(phoneLabel);
+
+        phoneField = new JTextField();
+        phoneField.setBounds(150, 200, 150, 30);
+        phoneField.setEditable(false);
+        container.add(phoneField);
+
+        previousButton = new JButton("Previous");
+        previousButton.setBounds(50, 250, 100, 30);
+        previousButton.addActionListener(this);
+        container.add(previousButton);
+
+        nextButton = new JButton("Next");
+        nextButton.setBounds(200, 250, 100, 30);
+        nextButton.addActionListener(this);
+        container.add(nextButton);
+
+        showCustomerData(currentIndex);
+    }
+
+
+    private void showCustomerData(int index) {
+        idField.setText(customers[index][0]);
+        lastNameField.setText(customers[index][1]);
+        firstNameField.setText(customers[index][2]);
+        phoneField.setText(customers[index][3]);
+        previousButton.setEnabled(index > 0);
+        nextButton.setEnabled(index < customers.length - 1);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == previousButton) {
+            currentIndex--;
+            showCustomerData(currentIndex);
+        } else if (e.getSource() == nextButton) {
+            currentIndex++;
+            showCustomerData(currentIndex);
+        }
+    }
+
+    public static void main(String[] args) {
+        CustomerInfo customerInfo = new CustomerInfo();
+        customerInfo.setVisible(true);
+    }
+}
